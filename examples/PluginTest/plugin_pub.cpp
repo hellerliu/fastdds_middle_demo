@@ -30,18 +30,19 @@ public:
             int res = publisher_->publish(msg_);
             printf("pub:%d %d\n", msg_.index(), res);
         };
-        rpc::get_handle_thread()->setTimer(func, 1000, 1000);
-        
+        timer_pub_ = rpc::GlobalTimer::create(std::move(func), 1000, true);
     }
 
     ~PubTestNode()
     {
+        // rpc::get_handle_thread()->killTimer(time_id_, true);
         printf("PubTestNode release\n");
     }
 
 private:
     ChannelPublisher<HelloWorldPubSubType>::Ptr publisher_;
     HelloWorld msg_;
+    rpc::GlobalTimer::Ptr timer_pub_;
 };
 
 COMPONENTS_REGISTER_NODE(PubTestNode)
