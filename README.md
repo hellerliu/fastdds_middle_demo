@@ -10,6 +10,6 @@
 6. normal_pub.cpp，normal_sub.cpp支持c++结构体、protobuf、json数据的订阅发布；python版本订阅发布json数据测试见normal_pub.py，normal_sub.py。上述用于自定义非ros2 idl数据订阅发布。
 7. 服务的实现和使用简单，采用c++的宏定义和虚函数即可完成接口定义，和server端的功能描述。rpc支持同步调用，异步回调(async)两种模型。见ServiceTest文件夹。
 8. normal_client, normal_server是请求应答的演示，客户端先调用fiber_test函数，后调用addOne，由于有协程支持，fiber_test在服务端被挂起并且不阻塞后面消息，最后是addOne先返回。fiber_client，fiber_server演示了复杂的协程使用和函数调用，请求为结构体，回复为protobuf；并且有四种协程切换方式：marl sleep，新建线程，单线程队列，rpc请求。json_client.py，fiber_server演示python客户端和json格式数据的请求和回复。
-9. 外部接口API简单，并均为多线程安全。应用层调用不涉及到复杂的c++特性，只涉及常规的c++知识，能快速的掌握使用。提供c api，并方便其他语言如go,python等FFI调用。回调安全，在reset订阅者和client后，能立即释放回调函数涉及的对象指针。 
+9. 外部接口API简单，并均为多线程安全。应用层调用不涉及到复杂的c++特性，只涉及常规的c++知识，能快速的掌握使用。提供c api，并方便其他语言如云服务中go,python,nodejs等FFI调用，现在已完成python版本的FFI调用，见上面的normal_pub.py、normal_sub.py、json_client.py。回调安全，在reset订阅者和client后，能立即释放回调函数涉及的对象指针。 
 10. 支持插件方式加载，见plugin_pub.cpp,plugin_sub.cpp,运行plugin_test.sh加载pub sub到同一个进程。
 11. launch统一启动各个节点进程，配置见launcher.yml文件，运行launch命令。
